@@ -1,5 +1,6 @@
 import { Adventure, PriceTable } from '@/types/Adventure';
 import { Calendar, Users, MapPin, Info, CheckCircle2, Flame } from 'lucide-react';
+import { EnrollButton } from '../Buttons/EnrollButton';
 
 export function AdventureCard({ adventure }: { adventure: Adventure }) {
   const currentParticipants = adventure.members?.length || 0;
@@ -74,16 +75,7 @@ export function AdventureCard({ adventure }: { adventure: Adventure }) {
       </div>
 
       <div className="p-5 pt-0">
-        <button 
-          disabled={isFull}
-          className={`w-full py-3 rounded-xl font-bold transition-all ${
-            isFull 
-              ? 'bg-slate-200 text-slate-400 cursor-not-allowed' 
-              : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-100'
-          }`}
-        >
-          {isFull ? 'Vagas Esgotadas' : 'Quero me juntar'}
-        </button>
+        <EnrollButton adventureId={adventure.id} members={adventure.members} status={adventure.status} isHomePage={true}/>
       </div>
     </div>
   );

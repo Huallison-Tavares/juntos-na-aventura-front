@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, MessageCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { loginUser } from '@/lib/auth';
+import Link from 'next/link';
 
 
 export default function LoginPage() {
@@ -107,6 +108,14 @@ export default function LoginPage() {
                   </>
                 )}
               </button>
+              <div className="mt-6 text-center">
+                <p className="text-sm text-slate-600">
+                  Ainda não tem conta?{' '}
+                  <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    Criar conta
+                  </Link>
+                </p>
+              </div>
             </div>
           </form>
         </div>
