@@ -43,7 +43,7 @@ export function EnrollButton({ adventureId, status, members, isHomePage }: Enrol
     }
 
     registerUserAdventure(adventureId, user?.id);
-    router.refresh();
+    router.push("/my-adventures");
   };
 
   if(isHomePage){

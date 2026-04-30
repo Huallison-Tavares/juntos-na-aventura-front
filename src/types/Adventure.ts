@@ -9,7 +9,8 @@ export interface Adventure {
   minTariff: number;
   status: 'pending_group' | 'confirmed' | 'full';
   members: Member[];
-  priceTable: PriceTable[]
+  priceTable: PriceTable[];
+  creatorId: number;
 }
 
 export interface PriceTable{
