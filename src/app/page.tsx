@@ -1,11 +1,9 @@
 import Header from "@/components/common/Header/Header";
 import HomeComponent from "@/components/pages/Home/HomeComponent";
+import { constructMetadata } from "@/lib/metadata";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Juntos na Viagem - Explore Novas Aventuras",
-  description: "Escolha seu próximo destino e junte-se a grupos exclusivos. Experiências inesquecíveis começam aqui.",
-};
+export const metadata: Metadata = constructMetadata();
 
 export default function Home() {
   return (
