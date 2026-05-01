@@ -4,24 +4,31 @@
   import { getAdventureById } from '@/services/adventures';
   import { Adventure } from '@/types/Adventure';
   import { Calendar, Users, MapPin, Info } from 'lucide-react';
+import { notFound } from 'next/navigation';
 
   interface AdventurePageProps {
     id: string;
   }
   export default async function AdventureDetailsPage({id} : AdventurePageProps) {
     const adventureId = Number(id);
-    const adventure: Adventure = await getAdventureById(adventureId);
+    if (isNaN(adventureId)) {
+      notFound();
+    }
 
-    // 1. Pegar a quantidade atual de membros (garantir que seja pelo menos 1 para o cálculo)
+    let adventure: Adventure;
+
+    try{
+      adventure = await getAdventureById(adventureId);
+    }catch {
+      notFound();
+    }
+
     const currentMembersCount = adventure.members?.length || 1;
 
-    // 2. Encontrar o preço correspondente na tabela
-    // Filtramos as faixas que já foram "atingidas" pelo grupo atual
     const applicablePrices = adventure.priceTable
       .filter(item => currentMembersCount >= item.persons)
-      .sort((a, b) => b.persons - a.persons); // Ordena decrescente para pegar a maior faixa atingida
+      .sort((a, b) => b.persons - a.persons);
 
-    // 3. O valor atual é o da primeira faixa encontrada, ou a tarifa mínima se não houver tabela
     const currentIndividualValue = applicablePrices.length > 0 
       ? applicablePrices[0].price 
       : adventure.minTariff;

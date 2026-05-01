@@ -1,6 +1,7 @@
-import { AdventureCard } from "@/components/common/AdventureCard/AdventureCard";
 import { getAdventures } from "@/services/adventures";
 import { Adventure } from "@/types/Adventure";
+import { AdventureCard } from "./components/AdventureCard";
+import { AdventureTitle } from "./components/AdventureTitle";
 
 export default async function HomeComponent() {
   const adventures = await getAdventures();
@@ -9,14 +10,7 @@ export default async function HomeComponent() {
     <main className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Título em Destaque */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-slate-900 sm:text-5xl mb-4">
-            Explore Novas Aventuras
-          </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Escolha seu próximo destino e junte-se a grupos exclusivos. Experiências inesquecíveis começam aqui.
-          </p>
-        </div>
+        <AdventureTitle />
 
         {/* Grid de Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

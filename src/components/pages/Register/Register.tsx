@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Mail, MessageCircle, User, ArrowRight, Loader2 } from 'lucide-react';
 import { registerUser } from '@/services/auth';
 import Link from 'next/link';
+import { Title } from '@/components/common/Title';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -32,14 +33,10 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900">
-          Crie sua conta
-        </h2>
-        <p className="mt-2 text-center text-sm text-slate-600">
-          Comece hoje sua jornada no Juntos na Aventura
-        </p>
-      </div>
+      <Title 
+        title='Crie sua conta' 
+        description='Comece hoje sua jornada no Juntos na Aventura'
+      />
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-slate-200">

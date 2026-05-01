@@ -1,6 +1,6 @@
+import { EnrollButton } from '@/components/common/Buttons/EnrollButton';
 import { Adventure, PriceTable } from '@/types/Adventure';
 import { Calendar, Users, MapPin, Info, CheckCircle2, Flame } from 'lucide-react';
-import { EnrollButton } from '../Buttons/EnrollButton';
 
 export function AdventureCard({ adventure }: { adventure: Adventure }) {
   const currentParticipants = adventure.members?.length || 0;

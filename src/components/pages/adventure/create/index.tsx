@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { MapPin, Plus, Trash2, Save } from "lucide-react";
+import { MapPin, Plus, Trash2, Save, Compass } from "lucide-react";
 import HeaderArrow from "@/components/common/Header/HeaderArrow";
 
 interface PriceEntry {
@@ -285,11 +285,11 @@ export default function CreateAdventurePage() {
             </div>
 
             <button
-              disabled={loading}
+              disabled={loadingPage}
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 rounded-2xl shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
-              {loading ? (
+              {loadingPage ? (
                 "Salvando..."
               ) : (
                 <>
@@ -303,18 +303,3 @@ export default function CreateAdventurePage() {
     </div>
   );
 }
-
-const Compass = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-  </svg>
-);
