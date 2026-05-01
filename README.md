@@ -23,7 +23,7 @@ Certifique-se de ter instalado em sua máquina:
 
 1. **Clonar o Repositório**
    ```bash
-   git clone [https://github.com/seu-usuario/juntos-na-aventura.git](https://github.com/seu-usuario/juntos-na-aventura.git)
+   git clone https://github.com/Huallison-Tavares/juntos-na-aventura-front.git
    cd juntos-na-aventura
 2. **Instalar Dependências**
    ```bash
