@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { MapPin, Plus, Trash2, Save, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { MapPin, Plus, Trash2, Save } from "lucide-react";
 import HeaderArrow from "@/components/common/Header/HeaderArrow";
 
 interface PriceEntry {
@@ -13,9 +12,9 @@ interface PriceEntry {
 }
 
 export default function CreateAdventurePage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(false);
 
   // Estados do Formulário
   const [name, setName] = useState("");
@@ -27,6 +26,15 @@ export default function CreateAdventurePage() {
   const [priceTable, setPriceTable] = useState<PriceEntry[]>([
     { persons: 1, price: 0 },
   ]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (!user) {
+      alert("Você precisa estar logado!");
+      router.push("/login");
+    }
+  }, [user, loading, router]);
 
   // Funções para manipular a tabela de preços dinâmica
   const addPriceRow = () =>
@@ -57,7 +65,7 @@ export default function CreateAdventurePage() {
     e.preventDefault();
     if (!user) return alert("Você precisa estar logado!");
 
-    setLoading(true);
+    setLoadingPage(true);
 
     const adventureData = {
       name,
@@ -81,7 +89,7 @@ export default function CreateAdventurePage() {
 
       if (response.ok) {
         alert("Aventura criada com sucesso!");
-        router.push("/");
+        router.push("/my-adventures");
       } else {
         throw new Error("Erro ao salvar");
       }
@@ -89,7 +97,7 @@ export default function CreateAdventurePage() {
       console.log(error)
       alert("Erro ao cadastrar aventura.");
     } finally {
-      setLoading(false);
+      setLoadingPage(false);
     }
   };
 

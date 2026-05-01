@@ -11,9 +11,10 @@ interface EnrollButtonProps {
   status: string;
   members: { userId: number }[];
   isHomePage?: boolean;
+  paymentStatus?: boolean;
 }
 
-export function EnrollButton({ adventureId, status, members, isHomePage }: EnrollButtonProps) {
+export function EnrollButton({ adventureId, status, members, isHomePage, paymentStatus }: EnrollButtonProps) {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
 
@@ -55,6 +56,17 @@ export function EnrollButton({ adventureId, status, members, isHomePage }: Enrol
                 Quero me juntar
             </Link>
         </button>
+    )
+  }
+
+  if(paymentStatus){
+    return(
+      <button 
+        disabled
+        className="w-full bg-slate-200 text-slate-500 font-bold py-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed border border-slate-300"
+      >
+        Inscrições Indisponíveis
+      </button>
     )
   }
 

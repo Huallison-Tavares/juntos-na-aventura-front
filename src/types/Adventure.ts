@@ -11,6 +11,7 @@ export interface Adventure {
   members: Member[];
   priceTable: PriceTable[];
   creatorId: number;
+  paymentStatus: boolean;
 }
 
 export interface PriceTable{

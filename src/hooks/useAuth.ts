@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface User {
   id: number;
@@ -10,48 +10,47 @@ interface User {
 }
 
 export function useAuth() {
+  const STORAGE_KEY = 'JuntosNaAventura:user';
+
+  // ✅ SEM acessar localStorage aqui
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const STORAGE_KEY = 'JuntosNaAventura:user';
+  const loadStorageData = useCallback(() => {
+    try {
+      const storedUser = localStorage.getItem(STORAGE_KEY);
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar usuário", error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    // Função para carregar os dados
-    const loadStorageData = () => {
-      try {
-        const storedUser = localStorage.getItem(STORAGE_KEY);
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (error) {
-        console.error("Erro ao carregar usuário do localStorage", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const id = setTimeout(() => {
+      loadStorageData();
+    }, 0);
 
-    loadStorageData();
-
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY) {
-        setUser(e.newValue ? JSON.parse(e.newValue) : null);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+    return () => clearTimeout(id);
+  }, [loadStorageData]);
 
   const logout = () => {
     localStorage.removeItem(STORAGE_KEY);
     setUser(null);
-    window.location.href = '/login'; // Redireciona para o login
+    window.location.href = '/login';
   };
 
   return {
     user,
     loading,
     isAuthenticated: !!user,
-    logout
+    logout,
+    refreshAuth: loadStorageData
   };
 }

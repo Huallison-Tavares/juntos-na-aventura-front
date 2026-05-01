@@ -11,20 +11,29 @@ import {
   Menu, 
   X 
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 export default function Header() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, loading } = useAuth();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Estilo para link ativo
-  const linkStyle = (path: string) => 
-    `flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-      pathname === path 
-        ? 'bg-indigo-50 text-indigo-700' 
-        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-    }`;
+  const linkStyle = useMemo(() => {
+    return (path: string) =>
+      `flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+        pathname === path
+          ? 'bg-indigo-50 text-indigo-700'
+          : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+      }`;
+  }, [pathname]);
+  
+  if (loading) {
+    return <div className="h-16 bg-white border-b" />;
+  }
+
+  const firstName = user?.name?.split(' ')[0] || 'Usuário';
+
+  const handleNavigation = () => setIsMenuOpen(false);
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
@@ -32,7 +41,7 @@ export default function Header() {
         <div className="flex justify-between h-16 items-center">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" onClick={handleNavigation} className="flex items-center gap-2 group">
             <div className="bg-indigo-600 p-1.5 rounded-lg group-hover:bg-indigo-700 transition-colors">
               <Compass className="h-6 w-6 text-white" />
             </div>
@@ -41,13 +50,13 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop */}
           <nav className="hidden md:flex items-center gap-4">
             <Link href="/" className={linkStyle('/')}>
               <Map className="h-4 w-4" />
               Explorar Aventuras
             </Link>
-            
+
             {isAuthenticated && (
               <Link href="/my-adventures" className={linkStyle('/my-adventures')}>
                 <Compass className="h-4 w-4" />
@@ -63,12 +72,13 @@ export default function Header() {
                   <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center border border-indigo-200">
                     <User className="h-4 w-4 text-indigo-600" />
                   </div>
-                  <span className="text-sm font-semibold">{user?.name.split(' ')[0]}</span>
+                  <span className="text-sm font-semibold">{firstName}</span>
                 </div>
+
                 <button 
                   onClick={logout}
+                  aria-label="Sair"
                   className="p-2 text-slate-400 hover:text-red-600 transition-colors cursor-pointer"
-                  title="Sair"
                 >
                   <LogOut className="h-5 w-5" />
                 </button>
@@ -83,10 +93,11 @@ export default function Header() {
             )}
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Button */}
           <div className="md:hidden">
             <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => setIsMenuOpen(prev => !prev)}
+              aria-label="Abrir menu"
               className="p-2 text-slate-600"
             >
               {isMenuOpen ? <X /> : <Menu />}
@@ -95,25 +106,39 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-slate-100 p-4 space-y-2 shadow-xl">
-          <Link href="/" className={linkStyle('/')} onClick={() => setIsMenuOpen(false)}>
+          <Link href="/" className={linkStyle('/')} onClick={handleNavigation}>
             Explorar Aventuras
           </Link>
+
           {isAuthenticated && (
-            <Link href="/my-adventures" className={linkStyle('/my-adventures')} onClick={() => setIsMenuOpen(false)}>
+            <Link 
+              href="/my-adventures" 
+              className={linkStyle('/my-adventures')} 
+              onClick={handleNavigation}
+            >
               Minhas Aventuras
             </Link>
           )}
+
           {!isAuthenticated && (
-            <Link href="/login" className="block w-full text-center bg-indigo-600 text-white py-3 rounded-lg font-bold">
+            <Link 
+              href="/login" 
+              onClick={handleNavigation}
+              className="block w-full text-center bg-indigo-600 text-white py-3 rounded-lg font-bold"
+            >
               Entrar
             </Link>
           )}
+
           {isAuthenticated && (
             <button 
-              onClick={logout}
+              onClick={() => {
+                logout();
+                handleNavigation();
+              }}
               className="w-full flex items-center justify-center gap-2 py-3 text-red-600 font-medium border border-red-100 rounded-lg"
             >
               <LogOut className="h-4 w-4" /> Sair
