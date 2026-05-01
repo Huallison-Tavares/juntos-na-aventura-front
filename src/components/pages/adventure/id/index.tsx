@@ -1,7 +1,7 @@
   import { EnrollButton } from '@/components/common/Buttons/EnrollButton';
   import HeaderArrow from '@/components/common/Header/HeaderArrow';
   import { LeaderPaymentAlert } from '@/components/common/LeaderPaymentAlert';
-  import { getAdventureById } from '@/lib/adventures';
+  import { getAdventureById } from '@/services/adventures';
   import { Adventure } from '@/types/Adventure';
   import { Calendar, Users, MapPin, Info } from 'lucide-react';
 

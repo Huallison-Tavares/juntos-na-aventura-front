@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Compass, ShieldCheck, Users, Calendar, MapPin, ArrowRight, Plus } from 'lucide-react'; // Adicionei o ícone Plus
 import Link from 'next/link';
-import { getAdventureByUser } from '@/lib/adventures';
+import { getAdventureByUser } from '@/services/adventures';
 import { Adventure } from '@/types/Adventure';
 import HeaderArrow from '@/components/common/Header/HeaderArrow';
 

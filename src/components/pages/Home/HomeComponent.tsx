@@ -1,5 +1,5 @@
 import { AdventureCard } from "@/components/common/AdventureCard/AdventureCard";
-import { getAdventures } from "@/lib/adventures";
+import { getAdventures } from "@/services/adventures";
 import { Adventure } from "@/types/Adventure";
 
 export default async function HomeComponent() {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, MessageCircle, User, ArrowRight, Loader2 } from 'lucide-react';
-import { registerUser } from '@/lib/auth';
+import { registerUser } from '@/services/auth';
 import Link from 'next/link';
 
 export default function RegisterPage() {

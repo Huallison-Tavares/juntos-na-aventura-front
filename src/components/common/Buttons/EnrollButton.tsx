@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
-import { registerUserAdventure } from '@/lib/adventures';
+import { registerUserAdventure } from '@/services/adventures';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

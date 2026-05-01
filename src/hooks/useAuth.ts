@@ -12,7 +12,6 @@ interface User {
 export function useAuth() {
   const STORAGE_KEY = 'JuntosNaAventura:user';
 
-  // ✅ SEM acessar localStorage aqui
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
